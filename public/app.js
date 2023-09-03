@@ -1,8 +1,11 @@
-// Initial game state
+// Initialize variables and game state
 let cells = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let result = document.querySelector('.result');
 let btns = document.querySelectorAll('.btn');
+let gameEnded = false; // Initialize gameEnded variable
+
+// Winning conditions
 let conditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -50,12 +53,16 @@ const resetGame = () => {
     result.textContent = `Player ${currentPlayer}'s Turn`;
     btns.forEach(btn => {
         btn.textContent = '';
-        btn.disabled = false;
     });
+    gameEnded = false; // Reset gameEnded
 };
 
+// Attach event listeners to the buttons
 btns.forEach((btn, i) => {
-    btn.addEventListener('click', () => ticTacToe(btn, i));
+    btn.addEventListener('click', () => {
+        ticTacToe(btn, i);
+    });
 });
 
+// Attach event listener to the reset button
 document.querySelector('#reset-button').addEventListener('click', resetGame);
