@@ -16,18 +16,17 @@ let conditions = [
 
 // Function to handle player moves
 const ticTacToe = (element, index) => {
-    if (!element.disabled) return;
+    if (cells[index] || gameEnded) return; // Check if cell is already occupied or the game has ended.
 
     element.textContent = currentPlayer;
     cells[index] = currentPlayer;
-    element.disabled = true;
 
     // Check for a win
     for (const condition of conditions) {
         const [a, b, c] = condition;
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
             result.textContent = `Player ${currentPlayer} wins!`;
-            btns.forEach(btn => (btn.disabled = true));
+            gameEnded = true;
             return;
         }
     }
@@ -35,6 +34,7 @@ const ticTacToe = (element, index) => {
     // Check for a draw
     if (cells.every(cell => cell !== '')) {
         result.textContent = "It's a draw!";
+        gameEnded = true;
         return;
     }
 
